@@ -7735,9 +7735,9 @@ Layer.prototype = {
 var requestAnimationFrame = (
     typeof window !== 'undefined'
     && (
-        (window.requestAnimationFrame && window.requestAnimationFrame.bind(window))
         // https://github.com/ecomfe/zrender/issues/189#issuecomment-224919809
-        || (window.msRequestAnimationFrame && window.msRequestAnimationFrame.bind(window))
+        (window.msRequestAnimationFrame && window.msRequestAnimationFrame.bind(window))
+        || window.requestAnimationFrame
         || window.mozRequestAnimationFrame
         || window.webkitRequestAnimationFrame
     )
@@ -11648,8 +11648,8 @@ var ZRender = function (id, dom, opts) {
     this.storage = storage;
     this.painter = painter;
 
-    var handerProxy = (!env$1.node && !env$1.worker) ? new HandlerDomProxy(painter.getViewportRoot(), painter.root) : null;
-    this.handler = new Handler(storage, painter, handerProxy, painter.root);
+    var handlerProxy = (!env$1.node && !env$1.worker) ? new HandlerDomProxy(painter.getViewportRoot(), painter.root) : null;
+    this.handler = new Handler(storage, painter, handlerProxy, painter.root);
 
     /**
      * @type {module:zrender/animation/Animation}
@@ -18353,7 +18353,7 @@ GradientManager.prototype.updateDom = function (gradient, dom) {
         stop.setAttribute('offset', colors[i].offset * 100 + '%');
 
         var color = colors[i].color;
-        if (color.indexOf('rgba' > -1)) {
+        if (color.indexOf('rgba') > -1) {
             // Fix Safari bug that stop-color not recognizing alpha #9014
             var opacity = parse(color)[3];
             var hex = toHex(color);
