@@ -6,6 +6,7 @@
     "canvas",
     "2d"
   ],
+  "types": "types.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/ecomfe/zrender.git"
