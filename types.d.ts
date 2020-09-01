@@ -90,9 +90,7 @@ interface ResizeOpts {
 	height?: number | string;
 }
 
-export default class zrender {
-	static init(canvas, opts?: InitOpts): Zrender;
-}
+export function init(canvas, opts?: InitOpts): Zrender;
 
 export class Zrender extends Group{
 	resize(opts?: ResizeOpts);
